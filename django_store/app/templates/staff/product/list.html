@@ -1,0 +1,55 @@
+{% extends "../base.html" %} {% block navbar %} {% with page=2 %}
+{{block.super}} {% endwith %} {% endblock %} {% block content%}
+<div class="container mt-3">
+  <h4>Danh sách sản phẩm</h4>
+  <table class="table table-bordered">
+    <thead class="text-center">
+      <tr>
+        <th style="width: 10%">STT</th>
+        <th style="width: 30%">Mã</th>
+        <th style="width: 30%">Tên</th>
+        <th style="width: 30%">Giá</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if not productList %}
+      <tr>
+        <td colspan="4">Không có sản phẩm nào</td>
+      </tr>
+      {% endif %} {% for p in productList %}
+      <tr>
+        <td class="text-center">{{forloop.counter}}</td>
+        <td>{{p.code}}</td>
+        <td>{{p.name}}</td>
+        <td class="text-center">
+          <a class="btn btn-secondary" href="/staff/update-product/{{p.id}}"
+            >Chỉnh sửa</a
+          >
+          <a class="btn btn-danger" href="javascript:deleteItem({{p.id}})"
+            >Xóa</a
+          >
+        </td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+  <a class="btn btn-primary" href="/staff/create-product">Thêm sản phẩm</a>
+</div>
+<script>
+  async function deleteItem(id) {
+    if (confirm("Bạn có muốn xóa nhóm sản phẩm này ?")) {
+      var url = "/staff/delete-product/" + id;
+      var token = "{{csrf_token}}";
+      var headers = { "X-CSRFToken": token };
+      var resp = await fetch(url, { method: "POST", headers: headers });
+      var result = await resp.json();
+      if (result.success) {
+        location.reload();
+      } else {
+        alert("Lỗi xảy ra:" + result.error);
+      }
+    }
+  }
+</script>
+> {% endblock %}

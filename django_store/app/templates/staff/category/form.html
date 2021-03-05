@@ -1,0 +1,20 @@
+{% extends "../base.html" %} {% block navbar %} {% with page=1 %}
+{{block.super}} {% endwith %} {% endblock %} {% block content%}
+<div class="container mt-3">
+  <h4>Thông tin nhóm sản phẩm</h4>
+  <form method="POST">
+    {% csrf_token %}
+    <table class="table">
+      {{form}}
+    </table>
+    <a class="btn btn-secondary" href="/staff">Quay lại</a>
+    <button type="submit" class="btn btn-primary">Lưu lại</button>
+  </form>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $("table input, table select").addClass("form-control");
+  });
+</script>
+> {% endblock %}

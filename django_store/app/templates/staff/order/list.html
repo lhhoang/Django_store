@@ -1,0 +1,7 @@
+{% extends "../base.html" %} {% block navbar %} {% with page=3 %}
+{{block.super}} {% endwith %} {% endblock %} {% block content%}
+<div class="container mt-3">
+  <h4>Danh sách đơn hàng</h4>
+  <a class="btn btn-primary" href="/staff/view-order/1">Xem đơn hàng</a>
+</div>
+> {% endblock %}
