@@ -2,20 +2,20 @@ from django.shortcuts import render, get_object_or_404
 from .models import *
 
 priceRangeList = [
-    {'id': 1, 'max': 10 * 1000000},
-    {'id': 2, 'min': 10 * 1000000, 'max': 20 * 1000000},
-    {'id': 3, 'min': 20 * 1000000}
+    {'id': 1, 'max': 10*1000000},
+    {'id': 2, 'min': 10*1000000, 'max': 20*1000000},
+    {'id': 3, 'min': 20*1000000}
 ]
 
 
 def index(request):
     data = request.GET
-    name = data.get('name')
+    name = data.get('name', '')
 
     categoryId = data.get('categoryId', '')
     categoryId = int(categoryId) if categoryId.isdigit() else None
 
-    priceRangeId = data.get('priceRangeList', '')
+    priceRangeId = data.get('priceRangeId', '')
     priceRangeId = int(priceRangeId) if priceRangeId.isdigit() else None
 
     productList = Product.objects.all()
@@ -26,7 +26,7 @@ def index(request):
         productList = productList.filter(category__id=categoryId)
 
     if priceRangeId and priceRangeId <= len(priceRangeList):
-        priceRange = priceRangeList[priceRangeId - 1]
+        priceRange = priceRangeList[priceRangeId-1]
         minPrice = priceRange.get('min')
         maxPrice = priceRange.get('max')
 
@@ -34,7 +34,7 @@ def index(request):
             productList = productList.filter(price__gte=minPrice)
 
         if maxPrice:
-            productList = productList.filter(price_tle=maxPrice)
+            productList = productList.filter(price__lte=maxPrice)
 
     categoryList = Category.objects.all()
     context = {
