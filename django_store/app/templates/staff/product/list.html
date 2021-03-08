@@ -5,10 +5,12 @@
   <table class="table table-bordered">
     <thead class="text-center">
       <tr>
-        <th style="width: 10%">STT</th>
-        <th style="width: 30%">Mã</th>
-        <th style="width: 30%">Tên</th>
-        <th style="width: 30%">Giá</th>
+        <th style="width: 5%">STT</th>
+        <th style="width: 15%">Mã</th>
+        <th style="width: 15%">Tên</th>
+        <th style="width: 15%">Giá</th>
+        <th style="width: 30%">Hình minh họa</th>
+        <th style="width: 20%"></th>
       </tr>
     </thead>
     <tbody>
@@ -21,6 +23,10 @@
         <td class="text-center">{{forloop.counter}}</td>
         <td>{{p.code}}</td>
         <td>{{p.name}}</td>
+        <td class="text-center">{{p.price}}</td>
+        <td class="text-center">
+          <img style="width: 90%; max-height: 200px" src="/{{p.image}}" />
+        </td>
         <td class="text-center">
           <a class="btn btn-secondary" href="/staff/update-product/{{p.id}}"
             >Chỉnh sửa</a

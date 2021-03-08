@@ -20,7 +20,9 @@ from accounts.views import signup
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('app.urls')),
+    path('staff/', include('app.urls_staff')),
+    path('', include('app.urls_enduser')),
+
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/signup', signup),
 ]
