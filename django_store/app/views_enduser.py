@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
+from .forms import *
 
 priceRangeList = [
     {'id': 1, 'max': 10*1000000},
@@ -55,7 +56,18 @@ def viewProduct(request, pk):
 
 
 def orderProduct(request, pk):
-    return render(request, 'enduser/order_product.html')
+    product = get_object_or_404(Product, pk=pk)
+    form = OrderForm(initial={'qty': 1})
+
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid:
+            data = form.cleaned_data
+            print('data:', data)
+            return redirect('/thank-you')
+
+    context = {'form': form, 'product': product}
+    return render(request, 'enduser/order_product.html', context)
 
 
 def thankYou(request):

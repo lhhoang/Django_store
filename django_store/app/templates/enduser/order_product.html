@@ -24,50 +24,52 @@
     </div>
     <div class="container mt-5 mb-5">
         <form method="POST" novalidate>
+            {% csrf_token %}
             <h4>Đặt mua hàng trực tuyến</h4>
             <table class="table table-form">
                 <tr>
                     <th colspan="2">
                         <h5>Thông tin sản phẩm</h4>
-                    </th>
+                    </th> 
                 </tr>
                 <tr>
                     <th>Tên sản phẩm:</th>
-                    <td>Acer 001</td>
+                    <td>{{product.name}}</td>
                 </tr>
                 <tr>
                     <th>Đơn giá:</th>
-                    <td>6.500.000 ₫</td>
+                    <td>{{product.price}}</td>
                 </tr>
                 <tr>
                     <th>Số lượng:</th>
-                    <td>
+                    <td> 
                         <div style="width:50px">
-                            <input class="form-control" type="number" value="1">
+                            {{form.qty}}
                         </div>
+                        {{form.qty.errors}}
                     </td>
                 </tr>
                 <tr>
-                    <th colspan="2">
+                    <th colspan="2"> 
                         <h5>Thông tin người mua hàng</h4>
                     </th>
                 </tr>
                 <tr>
                     <th>Họ và tên:</th>
-                    <td><input class="form-control"></td>
+                    <td>{{form.customerName}} {{form.customerName.errors}}</td>
                 </tr>
                 <tr>
                     <th>Số điện thoại:</th>
-                    <td><input class="form-control"></td>
+                    <td>{{form.customerPhone}} {{form.customerPhone.errors}}</td>
                 </tr>
                 <tr>
                     <th>Địa chỉ:</th>
-                    <td><input class="form-control"></td>
+                    <td>{{form.customerAdress}} {{form.customerAdress.errors}}</td>
                 </tr>
             </table>
-            <a href="/thank-you" class="btn btn-primary">
+            <button type="submit"  class="btn btn-primary">
                 Đặt mua
-            </a>
+            </button>
         </form>
     </div>
 </div>
