@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .forms import *
+from datetime import datetime
 
 priceRangeList = [
     {'id': 1, 'max': 10*1000000},
@@ -61,10 +62,19 @@ def orderProduct(request, pk):
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             data = form.cleaned_data
-            print('data:', data)
-            return redirect('/thank-you')
+            order = Order()
+            order.product = product
+            order.qty = int(data.get('qty'))
+            order.priceUnit = product.price
+            order.total = order.qty * order.priceUnit
+            order.customerName = data.get('customerName')
+            order.customerPhone = data.get('customerPhone')
+            order.customerAddress = data.get('customerAddress')
+            order.orderDate = datetime.now()
+            order.status = Order.Status.PENDING
+            order.save()
 
     context = {'form': form, 'product': product}
     return render(request, 'enduser/order_product.html', context)

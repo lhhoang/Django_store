@@ -1,7 +1,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <style>
     input {
         width: 100%;
@@ -64,7 +64,7 @@
                 </tr>
                 <tr>
                     <th>Địa chỉ:</th>
-                    <td>{{form.customerAdress}} {{form.customerAdress.errors}}</td>
+                    <td>{{form.customerAddress}} {{form.customerAddress.errors}}</td>
                 </tr>
             </table>
             <button type="submit"  class="btn btn-primary">
@@ -73,3 +73,8 @@
         </form>
     </div>
 </div>
+<script>
+  $(document).ready(function () {
+    $("table input, table select").addClass("form-control");
+  });
+</script>

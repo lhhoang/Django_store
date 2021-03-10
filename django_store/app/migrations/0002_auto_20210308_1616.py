@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='category',
             name='code',
-            field=models.CharField(max_length=30, unique=True, verbose_name='Mã'),
+            field=models.CharField(
+                max_length=30, unique=True, verbose_name='Mã'),
         ),
         migrations.AlterField(
             model_name='category',
@@ -24,17 +25,20 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='product',
             name='category',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='app.category', verbose_name='Nhóm sản phẩm'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT,
+                                    to='app.category', verbose_name='Nhóm sản phẩm'),
         ),
         migrations.AlterField(
             model_name='product',
             name='code',
-            field=models.CharField(max_length=30, unique=True, verbose_name='Mã'),
+            field=models.CharField(
+                max_length=30, unique=True, verbose_name='Mã'),
         ),
         migrations.AlterField(
             model_name='product',
             name='image',
-            field=models.ImageField(upload_to='static/images', verbose_name='Ảnh'),
+            field=models.ImageField(
+                upload_to='static/images', verbose_name='Ảnh'),
         ),
         migrations.AlterField(
             model_name='product',
@@ -49,17 +53,19 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Order',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('qty', models.IntegerField()),
                 ('priceUnit', models.IntegerField()),
                 ('total', models.IntegerField()),
                 ('customerName', models.CharField(max_length=50)),
                 ('customerPhone', models.CharField(max_length=20)),
-                ('customerAdress', models.CharField(max_length=200)),
+                ('customerAddress', models.CharField(max_length=200)),
                 ('orderDate', models.DateTimeField()),
                 ('deliverDate', models.DateTimeField(null=True)),
                 ('status', models.IntegerField()),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='app.product')),
+                ('product', models.ForeignKey(
+                    on_delete=django.db.models.deletion.PROTECT, to='app.product')),
             ],
         ),
     ]

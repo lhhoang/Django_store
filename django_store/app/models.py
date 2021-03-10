@@ -34,7 +34,7 @@ class Order(models.Model):
     total = models.IntegerField()
     customerName = models.CharField(max_length=50)
     customerPhone = models.CharField(max_length=20)
-    customerAdress = models.CharField(max_length=200)
+    customerAddress = models.CharField(max_length=200)
     orderDate = models.DateTimeField()
     deliverDate = models.DateTimeField(null=True)
     status = models.IntegerField()
