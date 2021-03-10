@@ -1,9 +1,10 @@
 import json
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from datetime import datetime
 # Create your views here.
 
 
@@ -94,9 +95,49 @@ def deleteProduct(request, pk):
 
 @login_required
 def listOrder(request):
-    return render(request, 'staff/order/list.html')
+    orderList = Order.objects.all()
+    context = {'orderList': orderList}
+    return render(request, 'staff/order/list.html', context)
+
 
 
 @login_required
 def viewOrder(request, pk):
-    return render(request, 'staff/order/view_detail.html')
+    order =get_object_or_404(Order, pk=pk)
+    context = {'order': order}
+    return render(request, 'staff/order/view_detail.html', context)
+
+@login_required
+def confirmOrderDelivered(request, pk):
+    error = ''
+    success = False
+    if request.method == 'POST':
+        try:
+            order = get_object_or_404(Order, pk=pk)
+            order.status = Order.Status.DELIVERED
+            order.deliverDate = datetime.now()
+            order.save()
+            success = True
+        except Exception as e:
+            error = str(e)
+    else:
+        error = 'Method not allow'
+    result = {'success': success, 'error': error}
+    return HttpResponse(json.dumps(result), content_type='application/json')
+
+@login_required
+def cancelOrder(request, pk):
+    error = ''
+    success = False
+    if request.method == 'POST':
+        try:
+            order = get_object_or_404(Order, pk=pk)
+            order.status = Order.Status.CANCELLED
+            order.save()
+            success = True
+        except Exception as e:
+            error = str(e)
+    else:
+        error = 'Method not allow'
+    result = {'success': success, 'error': error}
+    return HttpResponse(json.dumps(result), content_type='application/json')

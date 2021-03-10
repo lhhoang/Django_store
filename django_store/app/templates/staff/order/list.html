@@ -2,6 +2,42 @@
 {{block.super}} {% endwith %} {% endblock %} {% block content%}
 <div class="container mt-3">
   <h4>Danh sách đơn hàng</h4>
+  <table class="table table-bordered">
+    <thead>
+      <tr class="text-center">
+        <th style="width: 5%">STT</th>
+        <th style="width: 20%">Khách hàng</th>
+        <th style="width: 20%">Sản phẩm</th>
+        <th style="width: 10%">Số lượng</th>
+        <th style="width: 15%">Ngày đặt hàng</th>
+        <th style="width: 20%">Trạng thái</th>
+        <th style="width: 10%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if not orderList%}
+      <tr colspan="7">
+        Không có đơn hàng nào
+      </tr>
+      {% endif %} {% for o in orderList %}
+      <tr>
+        <td class="text-center">{{ forloop.counter }}</td>
+        <td>{{ o.customerName}}</td>
+        <td>{{ o.product.name}}</td>
+        <td class="text-center">{{ o.qty }}</td>
+        <td class="text-center">{{ o.orderDate | date:"d/m/Y H:i"}}</td>
+        <td>
+          {% if o.status == 0 %} Đang chờ giao hàng {% endif %} 
+          {% if o.status == 1 %} Đã giao hàng {% endif %} 
+          {% if o.status == 2 %} Đã hủy {% endif %}
+        </td>
+        <td class="text-center">
+          <a class="btn btn-secondary" href="/staff/view-order/{{o.id}}">Xem</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
   <a class="btn btn-primary" href="/staff/view-order/1">Xem đơn hàng</a>
 </div>
 > {% endblock %}

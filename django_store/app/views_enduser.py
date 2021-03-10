@@ -75,7 +75,7 @@ def orderProduct(request, pk):
             order.orderDate = datetime.now()
             order.status = Order.Status.PENDING
             order.save()
-
+            return redirect('/thank-you')
     context = {'form': form, 'product': product}
     return render(request, 'enduser/order_product.html', context)
 
